@@ -27,7 +27,7 @@ class GreetingEndpoint(
 
     private fun Greeting.toGreetingDto() = GreetingResponse(message)
 
-    private fun Greeting.toUpdateDto() = UpdateResponse(message)
+    private fun Greeting.toUpdateDto() = UpdateResponse(message, version)
 }
 
 data class GreetingResponse(
@@ -41,4 +41,5 @@ data class UpdateRequest(
 
 data class UpdateResponse(
     val message: String,
+    val version: Int,
 )

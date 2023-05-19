@@ -10,7 +10,7 @@ class InMemoryGreetingRepository : GreetingRepository {
     override fun get(): Greeting = message.get().toDomain()
     override fun update(message: String, lastVersion: Int): Greeting = this.message.updateAndGet {
         if (lastVersion == it.version) {
-            it.copy(message = message)
+            it.copy(message = message, version = it.version + 1)
         } else {
             throw GreetingRepository.VersionMismatchException()
         }
@@ -21,7 +21,7 @@ class InMemoryGreetingRepository : GreetingRepository {
     }
 
     private fun InMemoryGreetingEntity.toDomain() =
-        Greeting(message)
+        Greeting(message, version)
 
     companion object {
         private val DEFAULT_GREETING = InMemoryGreetingEntity(message = "hello world", version = 0)

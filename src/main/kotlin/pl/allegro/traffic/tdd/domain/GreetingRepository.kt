@@ -9,4 +9,5 @@ interface GreetingRepository {
 
 data class Greeting(
     val message: String,
+    val version: Int,
 )

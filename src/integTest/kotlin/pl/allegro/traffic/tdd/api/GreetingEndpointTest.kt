@@ -35,10 +35,10 @@ class GreetingEndpointTest(
     fun `update greeting`() {
         mockMvc.put("/greeting") {
             contentType = MediaType.APPLICATION_JSON
-            content = """ { "message": "updated greeting" } """
+            content = """ { "message": "updated greeting", "lastVersion": 0 } """
         }.andExpect {
             status { is2xxSuccessful() }
-            content { json(""" { "message": "updated greeting" } """) }
+            content { json(""" { "message": "updated greeting", "version": 1 } """) }
         }
 
         mockMvc.get("/greeting").andExpect {
