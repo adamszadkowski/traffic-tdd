@@ -3,6 +3,6 @@ package pl.allegro.traffic.tdd.domain
 class GreetingService(
     private val greetingRepository: GreetingRepository,
 ) {
-    fun get(): String = greetingRepository.get()
-    fun update(message: String): String = greetingRepository.update(message)
+    fun get(): Greeting = greetingRepository.get()
+    fun update(message: String): Greeting = greetingRepository.update(message)
 }

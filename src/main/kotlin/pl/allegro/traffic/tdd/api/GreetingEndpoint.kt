@@ -1,6 +1,7 @@
 package pl.allegro.traffic.tdd.api
 
 import org.springframework.web.bind.annotation.*
+import pl.allegro.traffic.tdd.domain.Greeting
 import pl.allegro.traffic.tdd.domain.GreetingService
 
 @RestController
@@ -11,11 +12,15 @@ class GreetingEndpoint(
 
     @GetMapping
     fun getGreeting() =
-        GreetingResponse(greetingService.get())
+        greetingService.get().toGreetingDto()
 
     @PutMapping
     fun updateGreeting(@RequestBody request: UpdateRequest) =
-        UpdateResponse(greetingService.update(request.message))
+        greetingService.update(request.message).toUpdateDto()
+
+    private fun Greeting.toGreetingDto() = GreetingResponse(message)
+
+    private fun Greeting.toUpdateDto() = UpdateResponse(message)
 }
 
 data class GreetingResponse(
