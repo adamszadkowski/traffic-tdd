@@ -9,5 +9,9 @@ import org.springframework.web.bind.annotation.RestController
 class GreetingEndpoint {
 
     @GetMapping
-    fun getGreeting() = "hello world"
+    fun getGreeting() = GreetingResponse("hello world")
 }
+
+data class GreetingResponse(
+    val message: String,
+)
