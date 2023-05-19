@@ -27,7 +27,7 @@ class GreetingEndpointTest(
     fun `get default greeting`() {
         mockMvc.get("/greeting").andExpect {
             status { is2xxSuccessful() }
-            content { json(""" { "message": "hello world" } """) }
+            content { json(""" { "message": "hello world", "version": 0 } """) }
         }
     }
 
@@ -43,7 +43,7 @@ class GreetingEndpointTest(
 
         mockMvc.get("/greeting").andExpect {
             status { is2xxSuccessful() }
-            content { json(""" { "message": "updated greeting" } """) }
+            content { json(""" { "message": "updated greeting", "version": 1 } """) }
         }
     }
 

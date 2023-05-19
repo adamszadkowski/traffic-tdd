@@ -25,13 +25,14 @@ class GreetingEndpoint(
     fun handleMismatchVersion() {
     }
 
-    private fun Greeting.toGreetingDto() = GreetingResponse(message)
+    private fun Greeting.toGreetingDto() = GreetingResponse(message, version)
 
     private fun Greeting.toUpdateDto() = UpdateResponse(message, version)
 }
 
 data class GreetingResponse(
     val message: String,
+    val version: Int,
 )
 
 data class UpdateRequest(
