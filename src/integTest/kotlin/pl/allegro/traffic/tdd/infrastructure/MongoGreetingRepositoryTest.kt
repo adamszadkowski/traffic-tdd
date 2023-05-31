@@ -2,8 +2,6 @@ package pl.allegro.traffic.tdd.infrastructure
 
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.TestConfiguration
-import org.springframework.context.annotation.Bean
 import pl.allegro.traffic.tdd.ApplicationTest
 import pl.allegro.traffic.tdd.domain.Greeting
 import pl.allegro.traffic.tdd.domain.GreetingRepository
@@ -15,14 +13,6 @@ import strikt.assertions.isEqualTo
 class MongoGreetingRepositoryTest(
     @Autowired private val greetingRepository: MongoGreetingRepository,
 ) {
-
-    @TestConfiguration
-    class TestBeans {
-
-        @Bean
-        fun greetingRepository(crudRepository: GreetingCrudRepository): GreetingRepository =
-            MongoGreetingRepository(crudRepository)
-    }
 
     @Test
     fun `get default greeting`() {

@@ -1,0 +1,2 @@
+org.springframework.test.context.TestExecutionListener=\
+  pl.allegro.traffic.tdd.listeners.MongoTestExecutionListener

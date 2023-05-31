@@ -4,7 +4,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import pl.allegro.traffic.tdd.domain.GreetingRepository
 import pl.allegro.traffic.tdd.domain.GreetingService
-import pl.allegro.traffic.tdd.infrastructure.InMemoryGreetingRepository
+import pl.allegro.traffic.tdd.infrastructure.GreetingCrudRepository
+import pl.allegro.traffic.tdd.infrastructure.MongoGreetingRepository
 
 @Configuration
 class GreetingConfiguration {
@@ -14,6 +15,6 @@ class GreetingConfiguration {
         GreetingService(greetingRepository)
 
     @Bean
-    fun greetingRepository(): GreetingRepository =
-        InMemoryGreetingRepository()
+    fun greetingRepository(crudRepository: GreetingCrudRepository): GreetingRepository =
+        MongoGreetingRepository(crudRepository)
 }

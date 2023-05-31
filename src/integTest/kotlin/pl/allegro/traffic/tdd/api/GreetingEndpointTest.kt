@@ -1,6 +1,5 @@
 package pl.allegro.traffic.tdd.api
 
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -9,25 +8,18 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.put
 import pl.allegro.traffic.tdd.ApplicationTest
-import pl.allegro.traffic.tdd.infrastructure.InMemoryGreetingRepository
 
 @ApplicationTest
 @AutoConfigureMockMvc
 class GreetingEndpointTest(
     @Autowired private val mockMvc: MockMvc,
-    @Autowired private val greetingRepository: InMemoryGreetingRepository,
 ) {
-
-    @BeforeEach
-    fun setUp() {
-        greetingRepository.clear()
-    }
 
     @Test
     fun `get default greeting`() {
         mockMvc.get("/greeting").andExpect {
             status { is2xxSuccessful() }
-            content { json(""" { "message": "hello world", "version": 0 } """) }
+            content { json(""" { "message": "Hello world", "version": 0 } """) }
         }
     }
 
