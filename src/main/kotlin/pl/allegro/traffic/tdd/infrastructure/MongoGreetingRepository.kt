@@ -1,5 +1,6 @@
 package pl.allegro.traffic.tdd.infrastructure
 
+import org.springframework.dao.OptimisticLockingFailureException
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import org.springframework.data.repository.CrudRepository
@@ -17,8 +18,15 @@ class MongoGreetingRepository(
 
     override fun update(message: String, lastVersion: Int): Greeting =
         MongoGreetingEntity(id = "single", message = message, version = lastVersion)
-            .let(crudRepository::save)
+            .let(::updateGreeting)
             .toDomain()
+
+    private fun updateGreeting(entity: MongoGreetingEntity) =
+        try {
+            crudRepository.save(entity)
+        } catch (e: OptimisticLockingFailureException) {
+            throw GreetingRepository.VersionMismatchException()
+        }
 
     private fun MongoGreetingEntity.toDomain() =
         Greeting(

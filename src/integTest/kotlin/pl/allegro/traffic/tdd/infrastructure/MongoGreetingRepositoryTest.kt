@@ -8,6 +8,7 @@ import pl.allegro.traffic.tdd.ApplicationTest
 import pl.allegro.traffic.tdd.domain.Greeting
 import pl.allegro.traffic.tdd.domain.GreetingRepository
 import strikt.api.expectThat
+import strikt.api.expectThrows
 import strikt.assertions.isEqualTo
 
 @ApplicationTest
@@ -35,5 +36,12 @@ class MongoGreetingRepositoryTest(
         expectThat(updated)
             .isEqualTo(Greeting(message = "updated greeting", version = 1))
             .isEqualTo(greetingRepository.get())
+    }
+
+    @Test
+    fun `fail to update incorrect version`() {
+        expectThrows<GreetingRepository.VersionMismatchException> {
+            greetingRepository.update(message = "update greeting", lastVersion = 5)
+        }
     }
 }
