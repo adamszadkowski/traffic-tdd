@@ -10,11 +10,12 @@ import kotlin.jvm.optionals.getOrNull
 
 class MongoGreetingRepository(
     private val crudRepository: GreetingCrudRepository,
+    private val defaultMessage: String,
 ) : GreetingRepository {
     override fun get(): Greeting =
         crudRepository.findById("single")
             .getOrNull()?.toDomain()
-            ?: Greeting(message = "Hello world", version = 0)
+            ?: Greeting(message = defaultMessage, version = 0)
 
     override fun update(message: String, lastVersion: Int): Greeting =
         MongoGreetingEntity(id = "single", message = message, version = lastVersion)

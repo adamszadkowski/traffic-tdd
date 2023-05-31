@@ -2,6 +2,7 @@ package pl.allegro.traffic.tdd.infrastructure
 
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.TestPropertySource
 import pl.allegro.traffic.tdd.ApplicationTest
 import pl.allegro.traffic.tdd.domain.Greeting
 import pl.allegro.traffic.tdd.domain.GreetingRepository
@@ -10,13 +11,14 @@ import strikt.api.expectThrows
 import strikt.assertions.isEqualTo
 
 @ApplicationTest
+@TestPropertySource(properties = ["greeting.default-message=default greeting value"])
 class MongoGreetingRepositoryTest(
     @Autowired private val greetingRepository: MongoGreetingRepository,
 ) {
 
     @Test
     fun `get default greeting`() {
-        expectThat(greetingRepository.get()).isEqualTo(Greeting(message = "Hello world", version = 0))
+        expectThat(greetingRepository.get()).isEqualTo(Greeting(message = "default greeting value", version = 0))
     }
 
     @Test
