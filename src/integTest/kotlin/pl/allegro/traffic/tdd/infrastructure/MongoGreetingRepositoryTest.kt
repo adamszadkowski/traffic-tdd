@@ -21,12 +21,21 @@ class MongoGreetingRepositoryTest(
     class TestBeans {
 
         @Bean
-        fun greetingRepository(): GreetingRepository =
-            MongoGreetingRepository()
+        fun greetingRepository(crudRepository: GreetingCrudRepository): GreetingRepository =
+            MongoGreetingRepository(crudRepository)
     }
 
     @Test
     fun `get default greeting`() {
         expectThat(greetingRepository.get()).isEqualTo(Greeting(message = "Hello world", version = 0))
+    }
+
+    @Test
+    fun `update greeting`() {
+        val updated = greetingRepository.update(message = "updated greeting", lastVersion = 0)
+
+        expectThat(updated)
+            .isEqualTo(Greeting(message = "updated greeting", version = 1))
+            .isEqualTo(greetingRepository.get())
     }
 }

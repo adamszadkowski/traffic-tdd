@@ -22,13 +22,13 @@ dependencies {
     constraints {
         implementation("io.strikt:strikt-core:0.34.1")
         implementation("io.mockk:mockk:1.13.5")
-//        implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.6.2")
+        implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.6.2")
     }
 }
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
-//    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -37,7 +37,7 @@ dependencies {
     testImplementation("io.mockk:mockk")
 
     integTestImplementation("org.springframework.boot:spring-boot-starter-test")
-//    integTestImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x")
+    integTestImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
