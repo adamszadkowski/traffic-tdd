@@ -1,0 +1,11 @@
+### Get greeting
+GET {{host}}/greeting
+
+### Update greeting
+PUT {{host}}/greeting
+Content-Type: application/json
+
+{
+  "message": "new greeting",
+  "lastVersion": 0
+}
