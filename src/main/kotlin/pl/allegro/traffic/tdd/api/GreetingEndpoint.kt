@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*
 import pl.allegro.traffic.tdd.domain.Greeting
 import pl.allegro.traffic.tdd.domain.GreetingRepository
 import pl.allegro.traffic.tdd.domain.GreetingService
+import java.security.Principal
 
 @RestController
 @RequestMapping("/greeting")
@@ -13,12 +14,12 @@ class GreetingEndpoint(
 ) {
 
     @GetMapping
-    fun getGreeting() =
-        greetingService.get().toGreetingDto()
+    fun getGreeting(principal: Principal) =
+        greetingService.get(principal.name).toGreetingDto()
 
     @PutMapping
-    fun updateGreeting(@RequestBody request: UpdateRequest) =
-        greetingService.update(request.message, request.lastVersion).toUpdateDto()
+    fun updateGreeting(principal: Principal, @RequestBody request: UpdateRequest) =
+        greetingService.update(principal.name, request.message, request.lastVersion).toUpdateDto()
 
     @ExceptionHandler(GreetingRepository.VersionMismatchException::class)
     @ResponseStatus(HttpStatus.CONFLICT)

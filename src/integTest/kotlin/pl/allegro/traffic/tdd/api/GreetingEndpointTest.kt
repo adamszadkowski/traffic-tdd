@@ -1,7 +1,10 @@
 package pl.allegro.traffic.tdd.api
 
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.http.MediaType
@@ -67,6 +70,40 @@ class GreetingEndpointTest(
                 with(user(loggedInUser))
             }.andExpect {
                 status { isConflict() }
+            }
+        }
+    }
+
+    @Nested
+    inner class `two users` {
+
+        @BeforeEach
+        fun `two users have updated greeting`() {
+            updateGreeting(user = "user1", message = "user1 greeting")
+            updateGreeting(user = "user2", message = "user2 greeting")
+        }
+
+        @ParameterizedTest
+        @CsvSource(
+            "user1, user1 greeting",
+            "user2, user2 greeting",
+        )
+        fun `two users can update`(userId: String, greeting: String) {
+            mockMvc.get("/greeting") {
+                with(user(userId))
+            }.andExpect {
+                status { is2xxSuccessful() }
+                content { json(""" { "message": "$greeting", "version": 1 } """) }
+            }
+        }
+
+        private fun updateGreeting(user: String, message: String) {
+            mockMvc.put("/greeting") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """ { "message": "$message", "lastVersion": 0 } """
+                with(user(user))
+            }.andExpect {
+                status { is2xxSuccessful() }
             }
         }
     }
