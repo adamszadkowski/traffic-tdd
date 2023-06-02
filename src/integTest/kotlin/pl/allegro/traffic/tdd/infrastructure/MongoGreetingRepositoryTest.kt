@@ -18,7 +18,9 @@ class MongoGreetingRepositoryTest(
 
     @Test
     fun `get default greeting`() {
-        expectThat(greetingRepository.get("single")).isEqualTo(Greeting(message = "default greeting value", version = 0))
+        expectThat(greetingRepository.get("single")).isEqualTo(
+            Greeting(message = "default greeting value", version = 0)
+        )
     }
 
     @Test
@@ -35,5 +37,15 @@ class MongoGreetingRepositoryTest(
         expectThrows<GreetingRepository.VersionMismatchException> {
             greetingRepository.update(userId = "single", message = "update greeting", lastVersion = 5)
         }
+    }
+
+    @Test
+    fun `two users update greeting`() {
+        greetingRepository.update(userId = "user1", message = "user1 greeting", lastVersion = 0)
+        greetingRepository.update(userId = "user2", message = "user2 greeting", lastVersion = 0)
+        greetingRepository.update(userId = "user2", message = "user2 greeting 2", lastVersion = 1)
+
+        expectThat(greetingRepository.get("user1")).isEqualTo(Greeting(message = "user1 greeting", version = 1))
+        expectThat(greetingRepository.get("user2")).isEqualTo(Greeting(message = "user2 greeting 2", version = 2))
     }
 }
