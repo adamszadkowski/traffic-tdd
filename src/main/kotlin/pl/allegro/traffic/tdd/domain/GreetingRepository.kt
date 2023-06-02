@@ -1,8 +1,8 @@
 package pl.allegro.traffic.tdd.domain
 
 interface GreetingRepository {
-    fun get(): Greeting
-    fun update(message: String, lastVersion: Int): Greeting
+    fun get(userId: String): Greeting
+    fun update(userId: String, message: String, lastVersion: Int): Greeting
 
     class VersionMismatchException : RuntimeException()
 }

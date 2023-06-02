@@ -12,13 +12,13 @@ class MongoGreetingRepository(
     private val crudRepository: GreetingCrudRepository,
     private val defaultMessage: String,
 ) : GreetingRepository {
-    override fun get(): Greeting =
-        crudRepository.findById("single")
+    override fun get(userId: String): Greeting =
+        crudRepository.findById(userId)
             .getOrNull()?.toDomain()
             ?: Greeting(message = defaultMessage, version = 0)
 
-    override fun update(message: String, lastVersion: Int): Greeting =
-        MongoGreetingEntity(id = "single", message = message, version = lastVersion)
+    override fun update(userId: String, message: String, lastVersion: Int): Greeting =
+        MongoGreetingEntity(id = userId, message = message, version = lastVersion)
             .let(::updateGreeting)
             .toDomain()
 

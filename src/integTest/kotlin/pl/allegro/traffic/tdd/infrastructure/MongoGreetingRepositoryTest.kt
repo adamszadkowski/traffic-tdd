@@ -18,22 +18,22 @@ class MongoGreetingRepositoryTest(
 
     @Test
     fun `get default greeting`() {
-        expectThat(greetingRepository.get()).isEqualTo(Greeting(message = "default greeting value", version = 0))
+        expectThat(greetingRepository.get("single")).isEqualTo(Greeting(message = "default greeting value", version = 0))
     }
 
     @Test
     fun `update greeting`() {
-        val updated = greetingRepository.update(message = "updated greeting", lastVersion = 0)
+        val updated = greetingRepository.update(userId = "single", message = "updated greeting", lastVersion = 0)
 
         expectThat(updated)
             .isEqualTo(Greeting(message = "updated greeting", version = 1))
-            .isEqualTo(greetingRepository.get())
+            .isEqualTo(greetingRepository.get("single"))
     }
 
     @Test
     fun `fail to update incorrect version`() {
         expectThrows<GreetingRepository.VersionMismatchException> {
-            greetingRepository.update(message = "update greeting", lastVersion = 5)
+            greetingRepository.update(userId = "single", message = "update greeting", lastVersion = 5)
         }
     }
 }
