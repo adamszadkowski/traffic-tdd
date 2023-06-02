@@ -1,8 +1,10 @@
 ### Get greeting
 GET {{host}}/greeting
+Authorization: Basic user password
 
 ### Update greeting
 PUT {{host}}/greeting
+Authorization: Basic user password
 Content-Type: application/json
 
 {
