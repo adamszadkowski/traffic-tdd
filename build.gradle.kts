@@ -29,6 +29,7 @@ dependencies {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -38,6 +39,7 @@ dependencies {
 
     integTestImplementation("org.springframework.boot:spring-boot-starter-test")
     integTestImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x")
+    integTestImplementation("org.springframework.security:spring-security-test")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
